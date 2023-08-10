@@ -15,7 +15,7 @@ function run(){
     img.src = 'assets/mole.png'
 
     img.addEventListener('click', () => {
-        score += 10
+        score += 1
         sound.play()
         scoreEl.textContent = score
         img.src = 'assets/mole-whacked.png'
