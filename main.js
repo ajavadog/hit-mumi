@@ -1,47 +1,64 @@
-const cursor = document.querySelector('.cursor')
-const holes = [...document.querySelectorAll('.hole')]
-const scoreEl = document.querySelector('.score span')
-let score = 0
+let selectedFood = null;
+let finalChoice = null;
+let isFinalRound = false;
 
-const sound = new Audio("assets/smash.mp3")
+// 初始设置
+let currentFoods = [getRandomFood(), getRandomFood()];
 
-function run(){
-    const i = Math.floor(Math.random() * holes.length)
-    const hole = holes[i]
-    let timer = null
+if (currentFoods[0] !== null && currentFoods[1] !== null) {
+    const food1Image = document.getElementById("food1Image");
+    const food1Name = document.getElementById("food1Name");
+    const food2Image = document.getElementById("food2Image");
+    const food2Name = document.getElementById("food2Name");
 
-    const img = document.createElement('img')
-    img.classList.add('mole')
-    img.src = 'assets/mole.png'
+    food1Image.src = currentFoods[0].image;
+    food1Name.textContent = currentFoods[0].name;
+    food2Image.src = currentFoods[1].image;
+    food2Name.textContent = currentFoods[1].name;
 
-    img.addEventListener('click', () => {
-        score += 1
-        sound.play()
-        scoreEl.textContent = score
-        img.src = 'assets/mole-whacked.png'
-        clearTimeout(timer)
-        setTimeout(() => {
-            hole.removeChild(img)
-            run()
-        }, 500)
-    })
-
-    hole.appendChild(img)
-
-    timer = setTimeout(() => {
-        hole.removeChild(img)
-        run()
-    }, 1500)
+    document.getElementById("food1").style.display = "block";
+    document.getElementById("food2").style.display = "block";
+    document.getElementById("leftButton").textContent = "選擇 " + currentFoods[0].name;
+    document.getElementById("rightButton").textContent = "選擇 " + currentFoods[1].name;
 }
-run()
 
-window.addEventListener('mousemove', e => {
-    cursor.style.top = e.pageY + 'px'
-    cursor.style.left = e.pageX + 'px'
-})
-window.addEventListener('mousedown', () => {
-    cursor.classList.add('active')
-})
-window.addEventListener('mouseup', () => {
-    cursor.classList.remove('active')
-})
+function selectFood(selected) {
+    if (isFinalRound) {
+        return; // 如果已经是最后一轮，不执行选择操作
+    }
+
+    const food1Image = document.getElementById("food1Image");
+    const food1Name = document.getElementById("food1Name");
+    const food2Image = document.getElementById("food2Image");
+    const food2Name = document.getElementById("food2Name");
+
+    selectedFood = currentFoods[selected - 1];
+    currentFoods = [getRandomFood(), selectedFood];
+
+    food1Image.src = currentFoods[0].image;
+    food1Name.textContent = currentFoods[0].name;
+    food2Image.src = currentFoods[1].image;
+    food2Name.textContent = currentFoods[1].name;
+
+    // 设置按钮名称
+    document.getElementById("leftButton").textContent = "選擇 " + currentFoods[0].name;
+    document.getElementById("rightButton").textContent = "選擇 " + currentFoods[1].name;
+
+    if (foods.length === 0) {
+        isFinalRound = true;
+        finalChoice = selectedFood;
+        const finalChoiceImage = document.getElementById("finalChoiceImage");
+        const finalChoiceName = document.getElementById("finalChoiceName");
+
+        finalChoiceImage.src = finalChoice.image;
+        finalChoiceName.textContent = "最終選擇: " + finalChoice.name;
+
+        finalChoiceImage.style.display = "block"; // 显示最终选择的图片
+        finalChoiceName.style.display = "block"; // 显示最终选择的名称
+        document.getElementById("leftButton").style.display = "none"; // 隐藏左按钮
+        document.getElementById("rightButton").style.display = "none"; // 隐藏右按钮
+        document.getElementById("food1").style.display = "none"; // 隐藏食物选项
+        document.getElementById("food2").style.display = "none"; // 隐藏食物选项
+        document.getElementById("finalChoice").style.display = "block"; // 显示最终选择部分
+    }
+}
