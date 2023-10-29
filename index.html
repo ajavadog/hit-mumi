@@ -1,27 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>打地姆</title>
+    <title>涵妹吃蝦米</title>
+    <style>
+        /* 设置全屏 */
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background-image: url("food/han5.png"); /* 替换为你的背景图片路径 */
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* 设置页面容器样式，包括内边距，以确保四周留有空白 */
+        #foodContainer {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        /* 其他样式设置 */
+        h1, h2, div, span {
+            text-align: center;
+            color: #333; /* 文字颜色设置为深灰色 */
+        }
+
+        /* 调整按钮样式 */
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body>
-    <h1 class="score">受傷姆咪數: <span>0</span></h1>
-    <div class="board">
-        <div class="hole"></div>
-        <div class="hole"></div>
-        <div class="hole"></div>
-        <div class="hole"></div>
-        <div class="hole"></div>
-        <div class="hole"></div>
-        <div class="hole"></div>
-        <div class="hole"></div>
-        <div class="hole"></div>
+    <div id="foodContainer">
+        <h1>涵妹吃蝦米</h1>
+        <div id="food1" style="display: none;">
+            <img id="food1Image" src="food1.jpg" alt="Food 1 Image"> <!-- 替换为你的图像路径 -->
+            <span id="food1Name"></span>
+        </div>
+        <div id="food2" style="display: none;">
+            <img id="food2Image" src="food2.jpg" alt="Food 2 Image"> <!-- 替换为你的图像路径 -->
+            <span id="food2Name"></span>
+        </div>
+        <button id="leftButton" onclick="selectFood(1)"></button>
+        <button id="rightButton" onclick="selectFood(2)"></button>
+     
+        <div id="finalChoice" style="display: none;">
+            <img id="finalChoiceImage" src="final-choice.jpg" alt="Final Choice Image"> <!-- 替换为你的最终选择图像路径 -->
+            <span id="finalChoiceName"></span>
+        </div>
     </div>
-    <div class="cursor"></div>
 
+    <script src="food.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
